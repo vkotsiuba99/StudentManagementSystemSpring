@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class StudentServiceImpl implements StudentService {
-    private StudentRepository studentRepository;
+    private final StudentRepository studentRepository;
 
     public StudentServiceImpl(StudentRepository studentRepository) {
         this.studentRepository = studentRepository;
@@ -27,11 +27,17 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public Student getStudentById(Long id) {
+        // need FIX 'Optional.get()' without 'isPresent()' check
         return studentRepository.findById(id).get();
     }
 
     @Override
     public Student updateStudent(Student student) {
         return studentRepository.save(student);
+    }
+
+    @Override
+    public void deleteStudentById(Long id) {
+        studentRepository.deleteById(id);
     }
 }
